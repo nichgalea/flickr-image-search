@@ -10,8 +10,10 @@ const basePath = path.join(__dirname, "src");
 
 module.exports = {
   target: "web",
-  entry: path.join(basePath, "app.jsx"),
+
+  entry: path.join(basePath, "index.jsx"),
   resolve: {
+    alias: { src: basePath },
     extensions: [".js", ".jsx"],
     mainFiles: ["index"]
   },
