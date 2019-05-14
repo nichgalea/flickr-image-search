@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 
-import flickr from "src/flickr.service";
 import Image from "src/image";
 
 import styles from "./styles.scss";
-import data from "./mockData.json";
 
 export default class Results extends Component {
   constructor(props) {
@@ -14,7 +12,7 @@ export default class Results extends Component {
   render() {
     return (
       <div className={styles.resultsGallery}>
-        {data.map(i => (
+        {this.props.list.map(i => (
           <Image key={i.id} image={i} />
         ))}
       </div>

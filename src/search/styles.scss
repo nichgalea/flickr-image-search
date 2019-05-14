@@ -10,11 +10,12 @@
   transition-property: top, left, transform, background, width, box-shadow;
   transition-duration: 350ms;
   transition-timing-function: ease;
+  background: white;
 
   &.searching {
     top: 0;
     width: 100%;
-    background-color: lightslategray;
+    background-color: #0b2a4a;
     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.75);
 
     .placeholder {
@@ -24,6 +25,11 @@
     .input {
       width: 100%;
       color: white;
+      padding: 16px;
+
+      &::selection {
+        background: white;
+      }
     }
   }
 }
@@ -46,8 +52,8 @@
   box-sizing: border-box;
   background: 0;
   border: 0;
-  padding: 16px;
+  padding: 16px 16px 16px 8px;
   font-size: 24px;
   width: 360px;
-  color: lightgray;
+  color: #0b2a4a;
 }

@@ -4,6 +4,7 @@ export class FlickrService {
     this.defaultParams.set("api_key", API_KEY);
     this.defaultParams.set("format", "json");
     this.defaultParams.set("nojsoncallback", 1);
+    this.defaultParams.set("safe_search", 1);
   }
 
   searchImages(query, page, resultsPerPage) {
@@ -16,7 +17,7 @@ export class FlickrService {
 
     const params = `${this.defaultParams.toString()}&${searchParams.toString()}`;
 
-    return fetch(`${API_URL}?${params}`).then(r => r.json());
+    return fetch(`${API_URL}?${params}`, { mode: "cors" }).then(r => r.json());
   }
 }
 

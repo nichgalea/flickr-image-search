@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { debounce } from "lodash";
 import cx from "classnames";
 
 import styles from "./styles.scss";
@@ -11,7 +12,10 @@ export default class Search extends Component {
       query: ""
     };
 
-    this.changeSearch = this.changeSearch.bind(this);
+    this.changeSearchValue = this.changeSearchValue.bind(this);
+    this.search = this.search.bind(this);
+    this.search = debounce(this.search, 350);
+    this.handleFocus = this.handleFocus.bind(this);
   }
 
   componentDidMount() {
@@ -30,13 +34,23 @@ export default class Search extends Component {
           type="search"
           className={styles.input}
           value={this.state.query}
-          onChange={this.changeSearch}
+          onChange={this.changeSearchValue}
+          onFocus={this.handleFocus}
         />
       </div>
     );
   }
 
-  changeSearch(e) {
+  handleFocus() {
+    this.input.select();
+  }
+
+  changeSearchValue(e) {
     this.setState({ query: e.currentTarget.value });
+    this.search(e.currentTarget.value);
+  }
+
+  search(query) {
+    this.props.onSearch(query);
   }
 }

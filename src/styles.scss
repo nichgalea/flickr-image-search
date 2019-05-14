@@ -4,6 +4,8 @@ body {
 
 button,
 input {
+  appearance: none;
+
   &:active,
   &:focus {
     outline: none;
