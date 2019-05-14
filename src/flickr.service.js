@@ -1,7 +1,4 @@
 export class FlickrService {
-  static API_URL = "https://api.flickr.com/services";
-  static CDN_DOMAIN = "staticflickr.com";
-
   constructor() {
     this.defaultParams = new URLSearchParams();
     this.defaultParams.set("api_key", API_KEY);
@@ -19,11 +16,7 @@ export class FlickrService {
 
     const params = `${this.defaultParams.toString()}&${searchParams.toString()}`;
 
-    return fetch(`${FlickrService.API_URL}?${params}`).then(r => r.json());
-  }
-
-  getImageUrl(image) {
-    return `https://farm${image.farm}.${FlickrService.CDN_DOMAIN}/${image.server}/${image.id}_${image.secret}.jpg`;
+    return fetch(`${API_URL}?${params}`).then(r => r.json());
   }
 }
 

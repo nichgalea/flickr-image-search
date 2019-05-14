@@ -49,7 +49,9 @@ module.exports = {
       template: `${basePath}/index.html`
     }),
     new webpack.DefinePlugin({
-      API_KEY: JSON.stringify(process.env.API_KEY)
+      API_KEY: JSON.stringify(process.env.API_KEY),
+      API_URL: JSON.stringify("https://api.flickr.com/services"),
+      CDN_DOMAIN: JSON.stringify("staticflickr.com")
     })
   ]
 };
