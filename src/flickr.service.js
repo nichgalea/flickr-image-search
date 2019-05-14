@@ -11,9 +11,8 @@ export class FlickrService {
     const searchParams = new URLSearchParams();
     searchParams.set("method", "flickr.photos.search");
     searchParams.set("text", query);
-
-    // searchParams.set() results per page
-    // searchParams.set() current page number
+    searchParams.set("page", page);
+    searchParams.set("per_page", resultsPerPage);
 
     const params = `${this.defaultParams.toString()}&${searchParams.toString()}`;
 
