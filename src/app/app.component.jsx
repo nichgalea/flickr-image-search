@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Search from "src/search";
 import Results from "src/results";
+import Loading from "src/loading";
 import flickrService from "src/flickr.service";
 
 import styles from "./styles.scss";
@@ -26,6 +27,7 @@ export default class App extends Component {
   render() {
     return (
       <>
+        <Loading />
         <Search onSearch={this.search} />
 
         <div className={styles.mainContent}>
@@ -38,6 +40,8 @@ export default class App extends Component {
   search() {
     const query = this.props.query.trim();
 
+    this.props.setLoading(true);
+
     if (query.length > 0) {
       this.currentPage = this.lastSearchedQuery === query ? this.currentPage + 1 : 0;
       this.lastSearchedQuery = this.props.query.trim();
@@ -48,9 +52,11 @@ export default class App extends Component {
         } else {
           this.setState({ results: [...this.state.results, ...r.photos.photo] });
         }
+
+        this.props.setLoading(false);
       });
     } else {
-      this.setState({ results: [], totalResultCount: 0 });
+      this.setState({ results: [], totalResultCount: 0 }, () => this.props.setLoading(false));
     }
 
     return Promise.resolve();
