@@ -10,21 +10,17 @@ const RESULTS_PER_PAGE = 45;
 
 export default class App extends Component {
   currentPage = 0;
+  lastSearchedQuery = null;
 
   constructor(props) {
     super(props);
 
     this.state = {
-      results: []
+      results: [],
+      totalResultCount: 0
     };
 
     this.search = this.search.bind(this);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.search !== this.props.search) {
-      this.currentPage = 0;
-    }
   }
 
   render() {
@@ -33,7 +29,7 @@ export default class App extends Component {
         <Search onSearch={this.search} />
 
         <div className={styles.mainContent}>
-          <Results list={this.state.results} onLoadMore={this.search} />
+          <Results list={this.state.results} onLoadMore={this.search} totalResultCount={this.state.totalResultCount} />
         </div>
       </>
     );
@@ -42,16 +38,21 @@ export default class App extends Component {
   search() {
     const query = this.props.query.trim();
 
-    if (query.length === 0) {
-      this.setState({ results: [] });
-    } else {
-      flickrService.searchImages(query.trim(), this.currentPage, RESULTS_PER_PAGE).then(r => {
-        if (currentPage++ === 0) {
-          this.setState({ results: r.photos.photo });
+    if (query.length > 0) {
+      this.currentPage = this.lastSearchedQuery === query ? this.currentPage + 1 : 0;
+      this.lastSearchedQuery = this.props.query.trim();
+
+      return flickrService.searchImages(query.trim(), this.currentPage, RESULTS_PER_PAGE).then(r => {
+        if (this.currentPage === 0) {
+          this.setState({ results: r.photos.photo, totalResultCount: Number(r.photos.total) });
         } else {
           this.setState({ results: [...this.state.results, ...r.photos.photo] });
         }
       });
+    } else {
+      this.setState({ results: [], totalResultCount: 0 });
     }
+
+    return Promise.resolve();
   }
 }

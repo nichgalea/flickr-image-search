@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import cx from "classnames";
 
 import styles from "./styles.scss";
 
@@ -14,25 +13,10 @@ export default class LazyImage extends Component {
     super(props);
 
     this.state = {
-      error: false,
-      isVisible: false
+      error: false
     };
 
     this.handleError = this.handleError.bind(this);
-  }
-
-  componentDidMount() {
-    this.intersectionObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          this.setState({ isVisible: true });
-          this.intersectionObserver.disconnect();
-        }
-      },
-      { threshold: [0, 1] }
-    );
-
-    this.intersectionObserver.observe(this.element);
   }
 
   render() {
@@ -40,13 +24,18 @@ export default class LazyImage extends Component {
       return null;
     }
 
+    if (!this.props.image) {
+      return (
+        <div className={styles.loading}>
+          <div className={styles.loadingText}>Loading...</div>
+        </div>
+      );
+    }
+
     return (
-      <img
-        ref={e => (this.element = e)}
-        className={cx(styles.image)}
-        src={this.state.isVisible ? this.src : null}
-        onError={this.handleError}
-      />
+      <a href={this.src} target="_blank" title={this.props.image.title}>
+        <img ref={e => (this.element = e)} className={styles.image} src={this.src} onError={this.handleError} />
+      </a>
     );
   }
 

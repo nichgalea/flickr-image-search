@@ -21,15 +21,3 @@ export class FlickrService {
 }
 
 export default new FlickrService();
-
-// Image Model {
-//   "id": "40873151913",
-//   "owner": "163394515@N05",
-//   "secret": "57a00a23d8",
-//   "server": "65535",
-//   "farm": 66,
-//   "title": "WhatsApp Image 2019-05-13 at 09.10.3760",
-//   "ispublic": 1,
-//   "isfriend": 0,
-//   "isfamily": 0
-// }

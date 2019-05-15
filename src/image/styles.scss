@@ -1,9 +1,32 @@
 .image {
-  height: 300px;
-  margin: 0 8px 8px 0;
-  min-width: 200px;
+  height: 350px;
+  display: block;
+  margin: 0 auto;
+  transition: 350ms transform ease;
+
+  &:hover {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    transform: scale(1.2);
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.75);
+  }
 }
 
-.hidden {
-  display: none;
+.loading {
+  position: relative;
+  border: 1px solid lightslategray;
+  color: lightslategray;
+  width: 350px;
+  height: 350px;
+  display: block;
+  margin: 0 auto;
+
+  .loading-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+  }
 }
